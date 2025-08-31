@@ -4,6 +4,1563 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  31337: {
+    YourContract: {
+      address: "0xb19b36b1456e65e3a6d514d3f715f204bd59f431",
+      abi: [
+        {
+          type: "constructor",
+          inputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "ADMIN_ROLE",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "CONCESSIONAIRE_ROLE",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "DEFAULT_ADMIN_ROLE",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "WORSHOP_ROLE",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "approveConcessionaire",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "isApproved",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "approveWorkshop",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "isApproved",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "approvedConcessionaires",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "name",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "country",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "city",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "addressDetail",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "phone",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "email",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "nit",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "certifications",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "isEnabled",
+              type: "bool",
+              internalType: "bool",
+            },
+            {
+              name: "wallet",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "status",
+              type: "uint8",
+              internalType: "enum YourContract.ApprovalStatus",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "approvedWorkshops",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "name",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "country",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "city",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "addressDetail",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "phone",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "services",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "rating",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "isEnabled",
+              type: "bool",
+              internalType: "bool",
+            },
+            {
+              name: "wallet",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "status",
+              type: "uint8",
+              internalType: "enum YourContract.ApprovalStatus",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "concessionaireSellCar",
+          inputs: [
+            {
+              name: "plate",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "newOwner",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "newPrice",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "concessionaires",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "name",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "country",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "city",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "addressDetail",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "phone",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "email",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "nit",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "certifications",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "isEnabled",
+              type: "bool",
+              internalType: "bool",
+            },
+            {
+              name: "wallet",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "status",
+              type: "uint8",
+              internalType: "enum YourContract.ApprovalStatus",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getApprovedConcessionaires",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "tuple[]",
+              internalType: "struct YourContract.Concessionaire[]",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "name",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "country",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "city",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "addressDetail",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "phone",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "email",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "nit",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "certifications",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "isEnabled",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "wallet",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "status",
+                  type: "uint8",
+                  internalType: "enum YourContract.ApprovalStatus",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getApprovedWorkshops",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "tuple[]",
+              internalType: "struct YourContract.Workshop[]",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "name",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "country",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "city",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "addressDetail",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "phone",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "services",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "rating",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "isEnabled",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "wallet",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "status",
+                  type: "uint8",
+                  internalType: "enum YourContract.ApprovalStatus",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getCarByplate",
+          inputs: [
+            {
+              name: "_plate",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "tuple",
+              internalType: "struct YourContract.Vehicle",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "plate",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "model",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "brand",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "vin",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "year",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "mileage",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "currentOwner",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "isSold",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "contact",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "price",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "fixes",
+                  type: "tuple[]",
+                  internalType: "struct YourContract.Fix[]",
+                  components: [
+                    {
+                      name: "id",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "workshopId",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "description",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "date",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "cost",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getConcessionaires",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "tuple[]",
+              internalType: "struct YourContract.Concessionaire[]",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "name",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "country",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "city",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "addressDetail",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "phone",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "email",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "nit",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "certifications",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "isEnabled",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "wallet",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "status",
+                  type: "uint8",
+                  internalType: "enum YourContract.ApprovalStatus",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getRoleAdmin",
+          inputs: [
+            {
+              name: "role",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getWorkshops",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "tuple[]",
+              internalType: "struct YourContract.Workshop[]",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "name",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "country",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "city",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "addressDetail",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "phone",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "services",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "rating",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "isEnabled",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "wallet",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "status",
+                  type: "uint8",
+                  internalType: "enum YourContract.ApprovalStatus",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "grantRole",
+          inputs: [
+            {
+              name: "role",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "hasRole",
+          inputs: [
+            {
+              name: "role",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "owner",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "ownerSellCar",
+          inputs: [
+            {
+              name: "plate",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "newOwner",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "newPrice",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "registerConseccionaire",
+          inputs: [
+            {
+              name: "concessionaire",
+              type: "tuple",
+              internalType: "struct YourContract.Concessionaire",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "name",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "country",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "city",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "addressDetail",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "phone",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "email",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "nit",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "certifications",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "isEnabled",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "wallet",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "status",
+                  type: "uint8",
+                  internalType: "enum YourContract.ApprovalStatus",
+                },
+              ],
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "registerFix",
+          inputs: [
+            {
+              name: "plate",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "fix",
+              type: "tuple",
+              internalType: "struct YourContract.Fix",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "workshopId",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "description",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "date",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "cost",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+              ],
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "registerVehicle",
+          inputs: [
+            {
+              name: "vehicle",
+              type: "tuple",
+              internalType: "struct YourContract.Vehicle",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "plate",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "model",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "brand",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "vin",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "year",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "mileage",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "currentOwner",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "isSold",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "contact",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "price",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "fixes",
+                  type: "tuple[]",
+                  internalType: "struct YourContract.Fix[]",
+                  components: [
+                    {
+                      name: "id",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "workshopId",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "description",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "date",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "cost",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "registerWorkshop",
+          inputs: [
+            {
+              name: "workshop",
+              type: "tuple",
+              internalType: "struct YourContract.Workshop",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "name",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "country",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "city",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "addressDetail",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "phone",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "services",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "rating",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "isEnabled",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "wallet",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "status",
+                  type: "uint8",
+                  internalType: "enum YourContract.ApprovalStatus",
+                },
+              ],
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "renounceRole",
+          inputs: [
+            {
+              name: "role",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+            {
+              name: "callerConfirmation",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "revokeRole",
+          inputs: [
+            {
+              name: "role",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "supportsInterface",
+          inputs: [
+            {
+              name: "interfaceId",
+              type: "bytes4",
+              internalType: "bytes4",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "vehicleToPlate",
+          inputs: [
+            {
+              name: "",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "plate",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "model",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "brand",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "vin",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "year",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "mileage",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "currentOwner",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "isSold",
+              type: "bool",
+              internalType: "bool",
+            },
+            {
+              name: "contact",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "price",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "workshops",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "name",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "country",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "city",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "addressDetail",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "phone",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "services",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "rating",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "isEnabled",
+              type: "bool",
+              internalType: "bool",
+            },
+            {
+              name: "wallet",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "status",
+              type: "uint8",
+              internalType: "enum YourContract.ApprovalStatus",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "event",
+          name: "ConcessionaireApproved",
+          inputs: [
+            {
+              name: "name",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "wallet",
+              type: "address",
+              indexed: false,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "ConcessionaireRegistered",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+            {
+              name: "name",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "wallet",
+              type: "address",
+              indexed: false,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "FixRegistered",
+          inputs: [
+            {
+              name: "plate",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "fixId",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+            {
+              name: "workshopId",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "RoleAdminChanged",
+          inputs: [
+            {
+              name: "role",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+            {
+              name: "previousAdminRole",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+            {
+              name: "newAdminRole",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "RoleGranted",
+          inputs: [
+            {
+              name: "role",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+            {
+              name: "account",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "sender",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "RoleRevoked",
+          inputs: [
+            {
+              name: "role",
+              type: "bytes32",
+              indexed: true,
+              internalType: "bytes32",
+            },
+            {
+              name: "account",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "sender",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "VehicleRegistered",
+          inputs: [
+            {
+              name: "plate",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "model",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "brand",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "WorkshopApproved",
+          inputs: [
+            {
+              name: "name",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "wallet",
+              type: "address",
+              indexed: false,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "WorkshopRegistered",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+            {
+              name: "name",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "wallet",
+              type: "address",
+              indexed: false,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "error",
+          name: "AccessControlBadConfirmation",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "AccessControlUnauthorizedAccount",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "neededRole",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+        },
+      ],
+      inheritedFunctions: {},
+      deployedOnBlock: 5,
+    },
+  },
+} as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;
