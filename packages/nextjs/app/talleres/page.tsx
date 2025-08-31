@@ -1,4 +1,5 @@
 "use client";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 import Link from "next/link";
 import {
@@ -20,88 +21,25 @@ enum ApprovalStatus {
 }
 
 interface Workshop {
-  id: number;
+  id: bigint;
   name: string;
   country: string;
   city: string;
   addressDetail: string;
   phone: string;
   services: string; // se guarda como un string separado por comas
-  rating: number;
+  rating: bigint;
   isEnabled: boolean;
   wallet: string; // address
   status: ApprovalStatus;
 }
 
 const TalleresPage = () => {
-  // Mock data - in a real app, this would come from your smart contract
-  const workshopsData: Workshop[] = [
-    {
-      id: 1,
-      name: "Taller Mecánico El Experto",
-      country: "Bolivia",
-      city: "La Paz",
-      addressDetail: "Av. Buenos Aires #1234, Zona Miraflores",
-      phone: "+591 2-2445678",
-      services: "Mantenimiento General,Frenos,Suspensión,Motor,Transmisión",
-      rating: 95,
-      isEnabled: true,
-      wallet: "0x742d35Cc6634C0532925a3b8D5c9E4b4C4b4b4b4",
-      status: ApprovalStatus.APPROVED,
-    },
-    {
-      id: 2,
-      name: "AutoServicio Premium",
-      country: "Bolivia",
-      city: "Santa Cruz",
-      addressDetail: "Av. Cristo Redentor #567, 4to Anillo",
-      phone: "+591 3-3456789",
-      services: "Aire Acondicionado,Sistema Eléctrico,Diagnóstico Computarizado,Pintura",
-      rating: 88,
-      isEnabled: true,
-      wallet: "0x8f3CF7ad23Cd3CaDbD9735AFf958023239c6A063",
-      status: ApprovalStatus.APPROVED,
-    },
-    {
-      id: 3,
-      name: "Taller Multimarca Altiplano",
-      country: "Bolivia",
-      city: "El Alto",
-      addressDetail: "Av. 6 de Marzo #890, Villa Adela",
-      phone: "+591 2-2867890",
-      services: "Mecánica General,Soldadura,Enderezado,Cambio de Aceite",
-      rating: 72,
-      isEnabled: false,
-      wallet: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-      status: ApprovalStatus.PENDING,
-    },
-    {
-      id: 4,
-      name: "Centro Automotriz Cochabamba",
-      country: "Bolivia",
-      city: "Cochabamba",
-      addressDetail: "Av. Ayacucho #2345, Zona Central",
-      phone: "+591 4-4234567",
-      services: "Inyección Electrónica,Alineación,Balanceado,Sistema de Escape",
-      rating: 91,
-      isEnabled: true,
-      wallet: "0xA0b86a33E6417c5e1C5e0b8a1e6c8b5d4a3c2b1a",
-      status: ApprovalStatus.APPROVED,
-    },
-    {
-      id: 5,
-      name: "Taller Especializado Tarija",
-      country: "Bolivia",
-      city: "Tarija",
-      addressDetail: "Calle Sucre #456, Barrio San Roque",
-      phone: "+591 4-6678901",
-      services: "Cajas Automáticas,Dirección Hidráulica,Radiadores",
-      rating: 65,
-      isEnabled: true,
-      wallet: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-      status: ApprovalStatus.REJECTED,
-    },
-  ];
+  const { data, isLoading } = useScaffoldReadContract({
+    contractName: "YourContract",
+    functionName: "getWorkshops"
+  });
+  const workshopsData = data as Workshop[] | undefined;
 
   const getRatingColor = (rating: number) => {
     if (rating >= 90) return "text-success";
@@ -149,7 +87,7 @@ const TalleresPage = () => {
               <WrenchScrewdriverIcon className="h-8 w-8" />
             </div>
             <div className="stat-title">Total Talleres</div>
-            <div className="stat-value text-primary">{workshopsData.length}</div>
+            <div className="stat-value text-primary">{workshopsData?.length ?? 0}</div>
           </div>
 
           <div className="stat bg-base-100">
@@ -158,7 +96,7 @@ const TalleresPage = () => {
             </div>
             <div className="stat-title">Aprobados</div>
             <div className="stat-value text-success">
-              {workshopsData.filter(w => w.status === ApprovalStatus.APPROVED).length}
+              {workshopsData?.filter(w => w.status === ApprovalStatus.APPROVED).length}
             </div>
           </div>
 
@@ -168,7 +106,7 @@ const TalleresPage = () => {
             </div>
             <div className="stat-title">Pendientes</div>
             <div className="stat-value text-warning">
-              {workshopsData.filter(w => w.status === ApprovalStatus.PENDING).length}
+              {workshopsData?.filter(w => w.status === ApprovalStatus.PENDING).length}
             </div>
           </div>
 
@@ -177,13 +115,13 @@ const TalleresPage = () => {
               <CircleStackIcon className="h-8 w-8" />
             </div>
             <div className="stat-title">Activos</div>
-            <div className="stat-value text-info">{workshopsData.filter(w => w.isEnabled).length}</div>
+            <div className="stat-value text-info">{workshopsData?.filter(w => w.isEnabled).length}</div>
           </div>
         </div>
 
         {/* Workshops Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
-          {workshopsData.map(workshop => (
+          {workshopsData?.map(workshop => (
             <div
               key={workshop.id}
               className="card bg-base-100 shadow-2xl border border-base-300 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1"
@@ -197,7 +135,7 @@ const TalleresPage = () => {
                   </div>
                   <div className="flex items-center gap-1">
                     <StarIcon className="h-4 w-4 text-yellow-300" />
-                    <span className={`font-bold ${getRatingColor(workshop.rating)}`}>{workshop.rating}%</span>
+                    <span className={`font-bold ${getRatingColor(Number(workshop.rating))}`}>{workshop.rating}%</span>
                   </div>
                 </div>
               </div>
@@ -260,7 +198,7 @@ const TalleresPage = () => {
                     <span className="font-semibold text-primary">Calificación</span>
                   </div>
                   <div className="pl-6">
-                    <div className={`badge ${getRatingBadge(workshop.rating)} badge-lg`}>
+                    <div className={`badge ${getRatingBadge(Number(workshop.rating))} badge-lg`}>
                       {workshop.rating}% de satisfacción
                     </div>
                   </div>

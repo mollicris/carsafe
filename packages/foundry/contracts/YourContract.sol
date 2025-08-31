@@ -358,7 +358,7 @@ contract YourContract is AccessControl{
      * @return Array of Workshop structs with approval status.
      */
     function getWorkshops() public view returns (Workshop[] memory) {
-        return workshops;
+        return dummyWorkshops;
     }
 
     /**
