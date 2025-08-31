@@ -15,20 +15,22 @@ CarSafe es una aplicación web moderna que conecta usuarios con talleres mecáni
 ## ✨ Características Principales
 
 ### 🔧 Para Concecionarios
+
 - **Registro de Vehiculo**: Encuentra talleres mecánicos por ubicación, servicio y calificación
 - **Reporte de concecionarios**: Lista de los concecionarios autorizados
 - **Registro concecionario**: registro de concecionario
 
-
 ### 🔧 Para Usuarios
+
 - **Búsqueda**: Busqueda por la placa del automovil
 - **Verificar talleres**: Lista talleres autorizados
 
 ### 🏢 Para Talleres
+
 - **Registro de nuevos talleres**: Registra un nuevo automovil
 
-
 ### ⚡ Tecnológico
+
 - **Blockchain Integration**: Verificación transparente mediante smart contracts
 - **Tiempo Real**: Notificaciones y actualizaciones en tiempo real
 - **Responsive Design**: Experiencia optimizada para todos los dispositivos
@@ -42,32 +44,45 @@ CarSafe es una aplicación web moderna que conecta usuarios con talleres mecáni
 ## 🛠️ Tecnologías Utilizadas
 
 ### Frontend
+
 - **Next.js 14**: Framework React con App Router
 - **TypeScript**: Tipado estático para mayor robustez
 - **Tailwind CSS**: Framework CSS utility-first
 - **DaisyUI**: Component library para Tailwind CSS
 - **React Hook Form**: Manejo de formularios eficiente
 
-
 ### Backend & Blockchain
+
 - **Solidity 0.8.19**: Smart contracts en Ethereum
 - **Foundry**: Entorno de desarrollo para Ethereum
 - **OpenZeppelin**: Contratos seguros y auditados
 - **Scaffold Eth** : Marco inicial proyecto
 
 ### Infraestructura
+
 - **Vercel**: Despliegue y hosting frontend
 - **Sepolia** : Despliegue de contrato
-
 
 ## 📦 Instalación y Configuración
 
 ### Prerrequisitos
-- Node.js 18+ 
+
+- Node.js 18+
 - npm o yarn
 - Git
 
 ### 1. Clonar el Repositorio
+
 ```bash
 git clone https://github.com/mollicris/carsafe.git
 cd carsafe
+
+```
+
+## Deployed Contract
+
+0xd6371738b31b1eE092bBb8F3863C87F1b61a7185
+
+## Deployed Frontend
+
+https://carsafe.vercel.app/
