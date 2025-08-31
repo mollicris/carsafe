@@ -2,71 +2,52 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-
-interface Fix {
-  id: number;
-  workshopId: number;
-  description: string;
-  date: number; // timestamp
-  cost: number;
-}
-
-interface Vehicle {
-  id: number;
-  plate: string;
-  model: string;
-  brand: string;
-  vin: string;
-  year: number;
-  mileage: number;
-  currentOwner: string; // address
-  isSold: boolean;
-  contact: string;
-  price: number;
-  fixes: Fix[];
-}
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 const VehiculoPage = () => {
   const params = useParams();
   const plate = params.plate as string;
 
-  // Mock data - in a real app, this would come from your smart contract
-  const vehicleData: Vehicle = {
-    id: 1,
-    plate: plate?.toUpperCase() || "3822NKC",
-    model: "CS35",
-    brand: "CHANGAN",
-    vin: "LSFWB2B25GS123456",
-    year: 2015,
-    mileage: 85000,
-    currentOwner: "0x742d35Cc6634C0532925a3b8D5c9E4b4C4b4b4b4",
-    isSold: false,
-    contact: "+591 70123456",
-    price: 45000, // in bolivianos
-    fixes: [
-      {
-        id: 1,
-        workshopId: 101,
-        description: "Cambio de aceite y filtros",
-        date: 1693526400, // Sept 1, 2023
-        cost: 350,
-      },
-      {
-        id: 2,
-        workshopId: 102,
-        description: "Revisión de frenos y cambio de pastillas",
-        date: 1701388800, // Dec 1, 2023
-        cost: 850,
-      },
-      {
-        id: 3,
-        workshopId: 101,
-        description: "Alineación y balanceado",
-        date: 1709251200, // Mar 1, 2024
-        cost: 280,
-      },
-    ],
-  };
+  // Fetch vehicle data from smart contract
+  const {
+    data: vehicleData,
+    isLoading,
+    error,
+  } = useScaffoldReadContract({
+    contractName: "YourContract",
+    functionName: "getCarByplate",
+    args: [plate],
+  });
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300 flex items-center justify-center">
+        <div className="text-center">
+          <div className="loading loading-spinner loading-lg text-primary mb-4"></div>
+          <p className="text-lg text-base-content">Cargando información del vehículo...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error || !vehicleData || !vehicleData.isEnabled) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">🚗❌</div>
+          <h1 className="text-2xl font-bold text-error mb-4">Vehículo no encontrado</h1>
+          <p className="text-base-content mb-6">
+            No se encontró información para la placa: <strong>{plate?.toUpperCase()}</strong>
+          </p>
+          <Link href="/" className="btn btn-primary">
+            🏠 Volver al inicio
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300">
@@ -100,10 +81,9 @@ const VehiculoPage = () => {
             <h2 className="text-2xl font-bold flex items-center gap-3">📋 DATOS IDENTIFICACIÓN VEHÍCULO</h2>
           </div>
           <div className="card-body p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <IdentificationCard label="PLACA" value={vehicleData.plate} />
               <IdentificationCard label="VIN" value={vehicleData.vin} />
-              <IdentificationCard label="ID VEHÍCULO" value={vehicleData.id} />
             </div>
           </div>
         </div>
@@ -118,11 +98,19 @@ const VehiculoPage = () => {
               <div className="space-y-6">
                 <TechnicalDataItem icon="🚗" label="Marca" value={vehicleData.brand} />
                 <TechnicalDataItem icon="📅" label="Modelo" value={vehicleData.model} />
-                <TechnicalDataItem icon="🗓️" label="Año" value={vehicleData.year} />
-                <TechnicalDataItem icon="🛣️" label="Kilometraje" value={`${vehicleData.mileage.toLocaleString()} km`} />
+                <TechnicalDataItem icon="🗓️" label="Año" value={Number(vehicleData.year)} />
+                <TechnicalDataItem
+                  icon="🛣️"
+                  label="Kilometraje"
+                  value={`${Number(vehicleData.mileage).toLocaleString()} km`}
+                />
               </div>
               <div className="space-y-6">
-                <TechnicalDataItem icon="💰" label="Precio" value={`Bs. ${vehicleData.price.toLocaleString()}`} />
+                <TechnicalDataItem
+                  icon="💰"
+                  label="Precio"
+                  value={`Bs. ${Number(vehicleData.price).toLocaleString()}`}
+                />
                 <TechnicalDataItem icon="📞" label="Contacto" value={vehicleData.contact} />
                 <TechnicalDataItem icon="📊" label="Estado" value={vehicleData.isSold ? "Vendido" : "Disponible"} />
                 <TechnicalDataItem
@@ -150,17 +138,17 @@ const VehiculoPage = () => {
                   >
                     <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
                       <div className="flex-1">
-                        <h3 className="font-bold text-lg text-primary mb-2">Reparación #{fix.id}</h3>
+                        <h3 className="font-bold text-lg text-primary mb-2">Reparación #{Number(fix.id)}</h3>
                         <p className="text-base-content mb-2">{fix.description}</p>
                         <div className="flex flex-wrap gap-4 text-sm text-base-content/70">
-                          <span className="flex items-center gap-1">🏪 Taller ID: {fix.workshopId}</span>
+                          <span className="flex items-center gap-1">🏪 Taller ID: {Number(fix.workshopId)}</span>
                           <span className="flex items-center gap-1">
-                            📅 {new Date(fix.date * 1000).toLocaleDateString("es-ES")}
+                            📅 {new Date(Number(fix.date) * 1000).toLocaleDateString("es-ES")}
                           </span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-2xl font-bold text-accent">Bs. {fix.cost.toLocaleString()}</div>
+                        <div className="text-2xl font-bold text-accent">Bs. {Number(fix.cost).toLocaleString()}</div>
                       </div>
                     </div>
                   </div>
@@ -169,7 +157,7 @@ const VehiculoPage = () => {
                   <div className="text-center">
                     <div className="text-sm font-medium text-accent mb-1">Costo Total de Mantenimiento</div>
                     <div className="text-3xl font-bold text-accent">
-                      Bs. {vehicleData.fixes.reduce((total, fix) => total + fix.cost, 0).toLocaleString()}
+                      Bs. {vehicleData.fixes.reduce((total, fix) => total + Number(fix.cost), 0).toLocaleString()}
                     </div>
                   </div>
                 </div>
