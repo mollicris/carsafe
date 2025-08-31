@@ -29,7 +29,7 @@ interface Fix {
   cost: bigint;
 }
 
-const page = () => {
+const Page = () => {
   const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract({
     contractName: "YourContract",
   });
@@ -150,4 +150,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

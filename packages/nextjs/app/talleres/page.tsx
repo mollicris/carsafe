@@ -1,5 +1,4 @@
 "use client";
-import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 import Link from "next/link";
 import {
@@ -13,6 +12,7 @@ import {
   StarIcon,
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 enum ApprovalStatus {
   PENDING = "PENDING",
@@ -35,9 +35,9 @@ interface Workshop {
 }
 
 const TalleresPage = () => {
-  const { data, isLoading } = useScaffoldReadContract({
+  const { data } = useScaffoldReadContract({
     contractName: "YourContract",
-    functionName: "getWorkshops"
+    functionName: "getWorkshops",
   });
   const workshopsData = data as Workshop[] | undefined;
 
