@@ -1,6 +1,7 @@
-'use client';
-import { useState, FormEventHandler } from 'react'
-import { useScaffoldWriteContract, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+"use client";
+
+import { FormEventHandler, useState } from "react";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 interface FormData {
   id: bigint;
@@ -18,10 +19,10 @@ interface FormData {
 enum ApprovalStatus {
   PENDING,
   APPROVED,
-  REJECTED
+  REJECTED,
 }
 
-const page = () => {
+const Page = () => {
   const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract({
     contractName: "YourContract",
   });
@@ -38,9 +39,9 @@ const page = () => {
     wallet: "0x0000000000000000000000000000000000000000",
     status: ApprovalStatus.PENDING,
   });
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault();
-    console.log('Form data:', formData);
+    console.log("Form data:", formData);
     try {
       await writeYourContractAsync({
         functionName: "registerWorkshop",
@@ -63,7 +64,7 @@ const page = () => {
                 <select
                   className="select select-bordered w-full"
                   value={Number(formData.id)}
-                  onChange={(e) => setFormData({ ...formData, id: BigInt(parseInt(e.target.value)) })}
+                  onChange={e => setFormData({ ...formData, id: BigInt(parseInt(e.target.value)) })}
                 >
                   <option value={0}>Seleccione un tipo</option>
                   <option value={1}>Preventivo</option>
@@ -78,11 +79,11 @@ const page = () => {
                   rows={4}
                   placeholder="Describa el problema mecánico"
                   value={formData.services}
-                  onChange={(e) => setFormData({ ...formData, services: e.target.value })}
+                  onChange={e => setFormData({ ...formData, services: e.target.value })}
                   required
                   style={{
-                    borderRadius: '4px',
-                    minHeight: '150px'
+                    borderRadius: "4px",
+                    minHeight: "150px",
                   }}
                 ></textarea>
               </div>
@@ -96,7 +97,7 @@ const page = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;
