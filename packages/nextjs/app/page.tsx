@@ -5,15 +5,51 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { NextPage } from "next";
 import { ClockIcon, DocumentTextIcon, MagnifyingGlassIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {
   const [licensePlate, setLicensePlate] = useState("");
+  const [searchError, setSearchError] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   const router = useRouter();
 
-  const handleSearch = () => {
-    // TODO: verify that plate exists
-    router.push(`/vehiculos/${licensePlate}`);
+  // Fetch vehicle data to validate before navigation
+  const { refetch } = useScaffoldReadContract({
+    contractName: "YourContract",
+    functionName: "getCarByplate",
+    args: [licensePlate],
+    enabled: false, // Don't auto-fetch, only when we manually trigger
+  });
+
+  const handleSearch = async () => {
+    if (!licensePlate.trim()) {
+      setSearchError("Por favor ingresa una placa válida");
+      return;
+    }
+
+    setIsSearching(true);
+    setSearchError("");
+
+    try {
+      // Manually trigger the contract call
+      const result = await refetch();
+      const vehicle = result.data;
+
+      if (!vehicle || !vehicle.isEnabled) {
+        setSearchError("Vehículo no encontrado. Verifica que la placa sea correcta.");
+      } else if (!vehicle.isEnabled) {
+        setSearchError("Este vehículo no está disponible para consulta.");
+      } else {
+        // Vehicle exists and is enabled, navigate to details page
+        router.push(`/vehiculos/${licensePlate}`);
+      }
+    } catch (error) {
+      setSearchError("Error al buscar el vehículo. Intenta nuevamente.");
+      console.error("Search error:", error);
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   return (
@@ -42,16 +78,53 @@ const Home: NextPage = () => {
                   placeholder="Ingresa la placa (Ej: ABC-123)"
                   className="input input-bordered input-lg join-item flex-1 bg-white/95 text-gray-800 placeholder-gray-500 border-white/20 focus:border-white focus:bg-white"
                   value={licensePlate}
-                  onChange={e => setLicensePlate(e.target.value.toUpperCase())}
+                  onChange={e => {
+                    setLicensePlate(e.target.value.toUpperCase());
+                    setSearchError(""); // Clear error when user types
+                  }}
                 />
                 <button
                   className="btn btn-accent btn-lg join-item px-8 text-white font-semibold hover:scale-105 transition-transform"
                   onClick={handleSearch}
+                  disabled={isSearching}
                 >
-                  <MagnifyingGlassIcon className="h-5 w-5 mr-2" />
-                  Buscar
+                  {isSearching ? (
+                    <>
+                      <span className="loading loading-spinner loading-sm mr-2"></span>
+                      Buscando...
+                    </>
+                  ) : (
+                    <>
+                      <MagnifyingGlassIcon className="h-5 w-5 mr-2" />
+                      Buscar
+                    </>
+                  )}
                 </button>
               </div>
+
+              {/* Error Message */}
+              {searchError && (
+                <div className="mt-4 max-w-2xl mx-auto">
+                  <div className="alert alert-error shadow-lg bg-error/90 text-white">
+                    <div className="flex items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="stroke-current flex-shrink-0 h-6 w-6 mr-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span>{searchError}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

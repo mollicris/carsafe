@@ -11,15 +11,17 @@ import {
   PhoneIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
+import { Address } from "~~/components/scaffold-eth";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 enum ApprovalStatus {
-  PENDING = "PENDING",
-  APPROVED = "APPROVED",
-  REJECTED = "REJECTED",
+  PENDING = 0,
+  APPROVED = 1,
+  REJECTED = 2,
 }
 
 interface Concessionaire {
-  id: number;
+  id: bigint;
   name: string;
   country: string;
   city: string;
@@ -27,86 +29,61 @@ interface Concessionaire {
   phone: string;
   email: string;
   nit: string;
-  certifications: string; // se guarda como un string separado por comas
+  certifications: string;
   isEnabled: boolean;
-  wallet: string; // address
+  wallet: string;
   status: ApprovalStatus;
 }
 
 const ConcesionariosPage = () => {
-  // Mock data - in a real app, this would come from your smart contract
-  const concessionairesData: Concessionaire[] = [
-    {
-      id: 1,
-      name: "AutoMax Bolivia",
-      country: "Bolivia",
-      city: "La Paz",
-      addressDetail: "Av. 6 de Agosto #2547, Zona San Jorge",
-      phone: "+591 2-2441234",
-      email: "ventas@automax.bo",
-      nit: "1023456789012",
-      certifications: "ISO 9001,Certificación Toyota,Servicio Autorizado Hyundai",
-      isEnabled: true,
-      wallet: "0x742d35Cc6634C0532925a3b8D5c9E4b4C4b4b4b4",
-      status: ApprovalStatus.APPROVED,
-    },
-    {
-      id: 2,
-      name: "Concesionario Premium Motors",
-      country: "Bolivia",
-      city: "Santa Cruz",
-      addressDetail: "Av. Banzer Km 9, Zona Norte",
-      phone: "+591 3-3567890",
-      email: "info@premiummotors.bo",
-      nit: "2034567890123",
-      certifications: "Certificación BMW,Mercedes-Benz Autorizado,ISO 14001",
-      isEnabled: true,
-      wallet: "0x8f3CF7ad23Cd3CaDbD9735AFf958023239c6A063",
-      status: ApprovalStatus.APPROVED,
-    },
-    {
-      id: 3,
-      name: "Vehículos del Altiplano",
-      country: "Bolivia",
-      city: "El Alto",
-      addressDetail: "Av. Juan Pablo II #1234, Ciudad Satélite",
-      phone: "+591 2-2834567",
-      email: "contacto@altiplano.bo",
-      nit: "3045678901234",
-      certifications: "Servicio Suzuki,Certificación Nissan",
-      isEnabled: false,
-      wallet: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-      status: ApprovalStatus.PENDING,
-    },
-    {
-      id: 4,
-      name: "AutoSur Cochabamba",
-      country: "Bolivia",
-      city: "Cochabamba",
-      addressDetail: "Av. Blanco Galindo Km 6.5, Quillacollo",
-      phone: "+591 4-4123456",
-      email: "ventas@autosur.bo",
-      nit: "4056789012345",
-      certifications: "Ford Autorizado,Chevrolet Service,ISO 9001",
-      isEnabled: true,
-      wallet: "0xA0b86a33E6417c5e1C5e0b8a1e6c8b5d4a3c2b1a",
-      status: ApprovalStatus.APPROVED,
-    },
-    {
-      id: 5,
-      name: "Importadora Andina",
-      country: "Bolivia",
-      city: "Tarija",
-      addressDetail: "Av. Las Américas #890, Barrio San Luis",
-      phone: "+591 4-6789012",
-      email: "info@andina.bo",
-      nit: "5067890123456",
-      certifications: "Importador Oficial Kia,Servicio Mazda",
-      isEnabled: true,
-      wallet: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-      status: ApprovalStatus.REJECTED,
-    },
-  ];
+  // Read concessionaires from smart contract
+  const {
+    data: concessionairesData,
+    isLoading,
+    error,
+  } = useScaffoldReadContract({
+    contractName: "YourContract",
+    functionName: "getConcessionaires",
+  });
+
+  // Convert the contract data to our interface format
+  const concessionaires: Concessionaire[] = concessionairesData
+    ? concessionairesData.map((c: any) => ({
+        id: c.id,
+        name: c.name,
+        country: c.country,
+        city: c.city,
+        addressDetail: c.addressDetail,
+        phone: c.phone,
+        email: c.email,
+        nit: c.nit,
+        certifications: c.certifications,
+        isEnabled: c.isEnabled,
+        wallet: c.wallet,
+        status: c.status,
+      }))
+    : [];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300 flex items-center justify-center">
+        <div className="text-center">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+          <p className="mt-4 text-lg">Cargando concesionarios...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300 flex items-center justify-center">
+        <div className="alert alert-error max-w-md">
+          <span>Error al cargar los concesionarios: {error.message}</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300">
@@ -140,7 +117,7 @@ const ConcesionariosPage = () => {
               <BuildingOfficeIcon className="h-8 w-8" />
             </div>
             <div className="stat-title">Total Concesionarios</div>
-            <div className="stat-value text-primary">{concessionairesData.length}</div>
+            <div className="stat-value text-primary">{concessionaires.length}</div>
           </div>
 
           <div className="stat bg-base-100">
@@ -149,7 +126,7 @@ const ConcesionariosPage = () => {
             </div>
             <div className="stat-title">Aprobados</div>
             <div className="stat-value text-success">
-              {concessionairesData.filter(c => c.status === ApprovalStatus.APPROVED).length}
+              {concessionaires.filter(c => c.status === ApprovalStatus.APPROVED).length}
             </div>
           </div>
 
@@ -159,7 +136,7 @@ const ConcesionariosPage = () => {
             </div>
             <div className="stat-title">Pendientes</div>
             <div className="stat-value text-warning">
-              {concessionairesData.filter(c => c.status === ApprovalStatus.PENDING).length}
+              {concessionaires.filter(c => c.status === ApprovalStatus.PENDING).length}
             </div>
           </div>
 
@@ -168,105 +145,128 @@ const ConcesionariosPage = () => {
               <CircleStackIcon className="h-8 w-8" />
             </div>
             <div className="stat-title">Activos</div>
-            <div className="stat-value text-info">{concessionairesData.filter(c => c.isEnabled).length}</div>
+            <div className="stat-value text-info">{concessionaires.filter(c => c.isEnabled).length}</div>
           </div>
         </div>
 
         {/* Concessionaires Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
-          {concessionairesData.map(concessionaire => (
-            <div
-              key={concessionaire.id}
-              className="card bg-base-100 shadow-2xl border border-base-300 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1"
-            >
-              {/* Card Header */}
-              <div className="card-header bg-primary text-primary-content p-4 rounded-t-2xl">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-lg font-bold">{concessionaire.name}</h3>
-                    <p className="text-sm text-primary-content/80">ID: {concessionaire.id}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="card-body p-6">
-                {/* Location */}
-                <div className="mb-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <MapPinIcon className="h-5 w-5 text-primary" />
-                    <span className="font-semibold text-primary">Ubicación</span>
-                  </div>
-                  <div className="pl-6 space-y-1 text-sm">
-                    <p>
-                      <span className="font-medium">País:</span> {concessionaire.country}
-                    </p>
-                    <p>
-                      <span className="font-medium">Ciudad:</span> {concessionaire.city}
-                    </p>
-                    <p>
-                      <span className="font-medium">Dirección:</span> {concessionaire.addressDetail}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Contact Info */}
-                <div className="mb-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <PhoneIcon className="h-5 w-5 text-primary" />
-                    <span className="font-semibold text-primary">Contacto</span>
-                  </div>
-                  <div className="pl-6 space-y-1 text-sm">
-                    <p>
-                      <span className="font-medium">Teléfono:</span> {concessionaire.phone}
-                    </p>
-                    <p>
-                      <span className="font-medium">Email:</span> {concessionaire.email}
-                    </p>
-                    <p>
-                      <span className="font-medium">NIT:</span> {concessionaire.nit}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Certifications */}
-                <div className="mb-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <ShieldCheckIcon className="h-5 w-5 text-primary" />
-                    <span className="font-semibold text-primary">Certificaciones</span>
-                  </div>
-                  <div className="pl-6">
-                    <div className="flex flex-wrap gap-1">
-                      {concessionaire.certifications.split(",").map((cert, index) => (
-                        <span key={index} className="badge badge-outline badge-sm">
-                          {cert.trim()}
-                        </span>
-                      ))}
+        {concessionaires.length === 0 ? (
+          <div className="text-center py-12">
+            <BuildingOfficeIcon className="h-24 w-24 text-base-300 mx-auto mb-4" />
+            <h3 className="text-2xl font-bold text-base-content mb-2">No hay concesionarios registrados</h3>
+            <p className="text-base-content/70 mb-6">Sé el primero en registrarte como concesionario</p>
+            <Link href="/concesionarios/postular" className="btn btn-primary btn-lg">
+              ➕ Registrarme como Concesionario
+            </Link>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+            {concessionaires.map(concessionaire => (
+              <div
+                key={concessionaire.id.toString()}
+                className="card bg-base-100 shadow-2xl border border-base-300 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-1"
+              >
+                {/* Card Header */}
+                <div className="card-header bg-primary text-primary-content p-4 rounded-t-2xl">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-lg font-bold">{concessionaire.name}</h3>
+                      <p className="text-sm text-primary-content/80">ID: {concessionaire.id.toString()}</p>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      {concessionaire.status === ApprovalStatus.APPROVED && (
+                        <div className="badge badge-success badge-sm">Aprobado</div>
+                      )}
+                      {concessionaire.status === ApprovalStatus.PENDING && (
+                        <div className="badge badge-warning badge-sm">Pendiente</div>
+                      )}
+                      {concessionaire.status === ApprovalStatus.REJECTED && (
+                        <div className="badge badge-error badge-sm">Rechazado</div>
+                      )}
+                      {concessionaire.isEnabled && <div className="badge badge-info badge-sm">Activo</div>}
                     </div>
                   </div>
                 </div>
 
-                {/* Wallet */}
-                <div className="mb-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <CreditCardIcon className="h-5 w-5 text-primary" />
-                    <span className="font-semibold text-primary">Wallet</span>
+                {/* Card Body */}
+                <div className="card-body p-6">
+                  {/* Location */}
+                  <div className="mb-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <MapPinIcon className="h-5 w-5 text-primary" />
+                      <span className="font-semibold text-primary">Ubicación</span>
+                    </div>
+                    <div className="pl-6 space-y-1 text-sm">
+                      <p>
+                        <span className="font-medium">País:</span> {concessionaire.country}
+                      </p>
+                      <p>
+                        <span className="font-medium">Ciudad:</span> {concessionaire.city}
+                      </p>
+                      <p>
+                        <span className="font-medium">Dirección:</span> {concessionaire.addressDetail}
+                      </p>
+                    </div>
                   </div>
-                  <div className="pl-6">
-                    <code className="text-xs bg-base-200 p-2 rounded block">
-                      {concessionaire.wallet.slice(0, 6)}...{concessionaire.wallet.slice(-4)}
-                    </code>
-                  </div>
-                </div>
 
-                {/* Actions */}
-                <div className="card-actions justify-end mt-4">
-                  <button className="btn btn-primary btn-sm">Contactar</button>
+                  {/* Contact Info */}
+                  <div className="mb-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <PhoneIcon className="h-5 w-5 text-primary" />
+                      <span className="font-semibold text-primary">Contacto</span>
+                    </div>
+                    <div className="pl-6 space-y-1 text-sm">
+                      <p>
+                        <span className="font-medium">Teléfono:</span> {concessionaire.phone}
+                      </p>
+                      <p>
+                        <span className="font-medium">Email:</span> {concessionaire.email}
+                      </p>
+                      <p>
+                        <span className="font-medium">NIT:</span> {concessionaire.nit}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Certifications */}
+                  {concessionaire.certifications && (
+                    <div className="mb-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <ShieldCheckIcon className="h-5 w-5 text-primary" />
+                        <span className="font-semibold text-primary">Certificaciones</span>
+                      </div>
+                      <div className="pl-6">
+                        <div className="flex flex-wrap gap-1">
+                          {concessionaire.certifications.split(",").map((cert, index) => (
+                            <span key={index} className="badge badge-outline badge-sm">
+                              {cert.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Wallet */}
+                  <div className="mb-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <CreditCardIcon className="h-5 w-5 text-primary" />
+                      <span className="font-semibold text-primary">Wallet</span>
+                    </div>
+                    <div className="pl-6">
+                      <Address address={concessionaire.wallet} />
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="card-actions justify-end mt-4">
+                    <button className="btn btn-primary btn-sm">Contactar</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* Actions */}
         <div className="flex flex-wrap gap-4 justify-center mb-8">
