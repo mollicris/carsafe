@@ -1,66 +1,194 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { NextPage } from "next";
-import { useAccount } from "wagmi";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Address } from "~~/components/scaffold-eth";
+import { ClockIcon, DocumentTextIcon, MagnifyingGlassIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
 
 const Home: NextPage = () => {
-  const { address: connectedAddress } = useAccount();
+  const [licensePlate, setLicensePlate] = useState("");
+
+  const router = useRouter();
+
+  const handleSearch = () => {
+    // TODO: verify that plate exists
+    router.push(`/vehiculos/${licensePlate}`);
+  };
 
   return (
     <>
-      <div className="flex items-center flex-col grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <div className="flex justify-center items-center space-x-2 flex-col">
-            <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} />
+      {/* Hero Section */}
+      <div className="hero min-h-screen bg-gradient-to-br from-primary to-secondary">
+        <div className="hero-content text-center text-primary-content">
+          <div className="max-w-4xl">
+            <h1 className="mb-5 text-6xl font-bold">CarSafe</h1>
+            <p className="mb-8 text-xl">
+              Transparencia total en cada kilómetro. Verifica el historial completo de cualquier vehículo con tecnología
+              blockchain inmutable.
+            </p>
+
+            {/* License Plate Search */}
+            {/* <div className="max-w-md mx-auto mb-8"> */}
+            <div className="max-w-2xl mx-auto mb-8">
+              <div className="mb-4">
+                <h2 className="text-2xl font-semibold text-primary-content/90 mb-2">
+                  Consulta el historial de cualquier vehículo
+                </h2>
+              </div>
+              <div className="join w-full shadow-lg">
+                <input
+                  type="text"
+                  placeholder="Ingresa la placa (Ej: ABC-123)"
+                  className="input input-bordered input-lg join-item flex-1 bg-white/95 text-gray-800 placeholder-gray-500 border-white/20 focus:border-white focus:bg-white"
+                  value={licensePlate}
+                  onChange={e => setLicensePlate(e.target.value.toUpperCase())}
+                />
+                <button
+                  className="btn btn-accent btn-lg join-item px-8 text-white font-semibold hover:scale-105 transition-transform"
+                  onClick={handleSearch}
+                >
+                  <MagnifyingGlassIcon className="h-5 w-5 mr-2" />
+                  Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Section */}
+      <div className="py-20 bg-base-200">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">¿Por qué CarSafe?</h2>
+            <p className="text-xl text-base-content/70 max-w-2xl mx-auto">
+              La primera plataforma que conecta concesionarios, talleres y propietarios en un ecosistema transparente de
+              confianza vehicular
+            </p>
           </div>
 
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
-        </div>
-
-        <div className="grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col md:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
-              </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body text-center">
+                <ClockIcon className="h-16 w-16 mx-auto text-primary mb-4" />
+                <h3 className="card-title justify-center mb-2">Historial Completo</h3>
+                <p>
+                  Accede al historial completo de cualquier vehículo desde su compra inicial, incluyendo todas las
+                  revisiones y mantenimientos realizados.
+                </p>
+              </div>
             </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
+
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body text-center">
+                <ShieldCheckIcon className="h-16 w-16 mx-auto text-primary mb-4" />
+                <h3 className="card-title justify-center mb-2">Talleres Certificados</h3>
+                <p>
+                  Solo talleres autorizados y certificados pueden subir reportes de revisión, garantizando la veracidad
+                  de la información.
+                </p>
+              </div>
+            </div>
+
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body text-center">
+                <DocumentTextIcon className="h-16 w-16 mx-auto text-primary mb-4" />
+                <h3 className="card-title justify-center mb-2">Reportes Inmutables</h3>
+                <p>
+                  Todos los reportes quedan registrados permanentemente en blockchain, creando un registro inmutable y
+                  transparente.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* How it Works Section */}
+      <div className="py-20 bg-base-100">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">¿Cómo Funciona?</h2>
+            <p className="text-lg text-base-content/70 max-w-xl mx-auto mb-12">
+              Proceso simple y transparente en tres pasos
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="steps steps-vertical lg:steps-horizontal w-full">
+              <div className="step step-primary">
+                <div className="lg:text-center">
+                  <h3 className="font-bold text-xl mb-2">Busca por Placa</h3>
+                  <p className="text-base-content/70">Ingresa el número de placa del vehículo que quieres consultar</p>
+                </div>
+              </div>
+              <div className="step step-primary">
+                <div className="lg:text-center">
+                  <h3 className="font-bold text-xl mb-2">Consulta el Historial</h3>
+                  <p className="text-base-content/70">Ve todos los reportes de mantenimiento y revisiones realizadas</p>
+                </div>
+              </div>
+              <div className="step step-primary">
+                <div className="lg:text-center">
+                  <h3 className="font-bold text-xl mb-2">Verifica la Información</h3>
+                  <p className="text-base-content/70">Toda la información está verificada por talleres certificados</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Sections */}
+      <div className="py-20 bg-gradient-to-r from-primary to-secondary text-primary-content">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Únete al Ecosistema CarSafe</h2>
+            <p className="text-xl opacity-90 max-w-2xl mx-auto">
+              Forma parte de la red de confianza vehicular más transparente
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Talleres */}
+            <div className="card bg-base-100 text-base-content shadow-2xl">
+              <div className="card-body text-center p-8">
+                <div className="bg-secondary text-secondary-content rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <ShieldCheckIcon className="h-8 w-8" />
+                </div>
+                <h3 className="card-title text-2xl justify-center mb-4">¿Eres un Taller Autorizado?</h3>
+                <p className="text-base-content/70 mb-6">
+                  Únete a nuestra red de talleres certificados y ayuda a crear el registro más confiable de historiales
+                  vehiculares.
+                </p>
+                <Link href="/talleres" className="btn btn-secondary btn-lg">
+                  Ver todos los Talleres
+                </Link>
+                <Link href="#" className="btn btn-secondary btn-lg btn-outline mt-2">
+                  Registrarme como Taller
+                </Link>
+              </div>
+            </div>
+
+            {/* Concesionarios */}
+            <div className="card bg-base-100 text-base-content shadow-2xl">
+              <div className="card-body text-center p-8">
+                <div className="bg-accent text-accent-content rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <DocumentTextIcon className="h-8 w-8" />
+                </div>
+                <h3 className="card-title text-2xl justify-center mb-4">¿Eres un Concesionario?</h3>
+                <p className="text-base-content/70 mb-6">
+                  Registra nuevos vehículos en la blockchain desde el momento de la venta y ofrece transparencia total a
+                  tus clientes.
+                </p>
+                <Link href="#" className="btn btn-accent btn-lg">
+                  Ver todos los Concesionarios
+                </Link>
+                <Link href="#" className="btn btn-accent btn-lg btn-outline mt-2">
+                  Registrarme como Concesionario
+                </Link>
+              </div>
             </div>
           </div>
         </div>
