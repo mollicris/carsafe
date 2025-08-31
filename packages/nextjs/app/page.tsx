@@ -19,6 +19,7 @@ const Home: NextPage = () => {
     contractName: "YourContract",
     functionName: "getCarByplate",
     args: [licensePlate],
+    // @ts-ignore
     enabled: false, // Don't auto-fetch, only when we manually trigger
   });
 
@@ -130,6 +131,66 @@ const Home: NextPage = () => {
         </div>
       </div>
 
+      {/* CTA Sections */}
+      <div className="py-20 bg-gradient-to-r from-primary to-secondary text-primary-content">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Únete al Ecosistema CarSafe</h2>
+            <p className="text-xl opacity-90 max-w-2xl mx-auto">
+              Forma parte de la red de confianza vehicular más transparente
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Talleres */}
+            <div className="card bg-base-100 text-base-content shadow-2xl">
+              <div className="card-body text-center p-8">
+                <div className="bg-secondary text-secondary-content rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <ShieldCheckIcon className="h-8 w-8" />
+                </div>
+                <h3 className="card-title text-2xl justify-center mb-4">¿Eres un Taller Autorizado?</h3>
+                <p className="text-base-content/70 mb-6">
+                  Únete a nuestra red de talleres certificados y ayuda a crear el registro más confiable de historiales
+                  vehiculares.
+                </p>
+                <Link href="/talleres/registrar-mantenimiento" className="btn btn-secondary btn-lg">
+                  Agrega una nueva revision a un auto
+                </Link>
+                <Link href="/talleres" className="btn btn-secondary btn-lg mt-2">
+                  Ver todos los Talleres
+                </Link>
+                <Link href="#" className="btn btn-secondary btn-lg btn-outline mt-2">
+                  Registrarme como Taller
+                </Link>
+              </div>
+            </div>
+
+            {/* Concesionarios */}
+            <div className="card bg-base-100 text-base-content shadow-2xl">
+              <div className="card-body text-center p-8">
+                <div className="bg-accent text-accent-content rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <DocumentTextIcon className="h-8 w-8" />
+                </div>
+                <h3 className="card-title text-2xl justify-center mb-4">¿Eres un Concesionario?</h3>
+                <p className="text-base-content/70 mb-6">
+                  Registra nuevos vehículos en la blockchain desde el momento de la venta y ofrece transparencia total a
+                  tus clientes.
+                </p>
+                <Link href="/concesionarios/registrar-auto" className="btn btn-accent btn-lg">
+                  Registra un Auto Nuevo
+                </Link>
+                <Link href="/concesionarios" className="btn btn-accent btn-lg my-2">
+                  Ver todos los Concesionarios
+                </Link>
+                <Link href="#" className="btn btn-accent btn-lg btn-outline mt-2">
+                  Registrarme como Concesionario
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Features Section */}
       <div className="py-20 bg-base-200">
         <div className="container mx-auto px-4">
@@ -207,60 +268,6 @@ const Home: NextPage = () => {
                   <h3 className="font-bold text-xl mb-2">Verifica la Información</h3>
                   <p className="text-base-content/70">Toda la información está verificada por talleres certificados</p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Sections */}
-      <div className="py-20 bg-gradient-to-r from-primary to-secondary text-primary-content">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Únete al Ecosistema CarSafe</h2>
-            <p className="text-xl opacity-90 max-w-2xl mx-auto">
-              Forma parte de la red de confianza vehicular más transparente
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Talleres */}
-            <div className="card bg-base-100 text-base-content shadow-2xl">
-              <div className="card-body text-center p-8">
-                <div className="bg-secondary text-secondary-content rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <ShieldCheckIcon className="h-8 w-8" />
-                </div>
-                <h3 className="card-title text-2xl justify-center mb-4">¿Eres un Taller Autorizado?</h3>
-                <p className="text-base-content/70 mb-6">
-                  Únete a nuestra red de talleres certificados y ayuda a crear el registro más confiable de historiales
-                  vehiculares.
-                </p>
-                <Link href="/talleres" className="btn btn-secondary btn-lg">
-                  Ver todos los Talleres
-                </Link>
-                <Link href="#" className="btn btn-secondary btn-lg btn-outline mt-2">
-                  Registrarme como Taller
-                </Link>
-              </div>
-            </div>
-
-            {/* Concesionarios */}
-            <div className="card bg-base-100 text-base-content shadow-2xl">
-              <div className="card-body text-center p-8">
-                <div className="bg-accent text-accent-content rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <DocumentTextIcon className="h-8 w-8" />
-                </div>
-                <h3 className="card-title text-2xl justify-center mb-4">¿Eres un Concesionario?</h3>
-                <p className="text-base-content/70 mb-6">
-                  Registra nuevos vehículos en la blockchain desde el momento de la venta y ofrece transparencia total a
-                  tus clientes.
-                </p>
-                <Link href="#" className="btn btn-accent btn-lg">
-                  Ver todos los Concesionarios
-                </Link>
-                <Link href="#" className="btn btn-accent btn-lg btn-outline mt-2">
-                  Registrarme como Concesionario
-                </Link>
               </div>
             </div>
           </div>
