@@ -1,12 +1,13 @@
-'use client';
+"use client";
 
-import { FormEventHandler, useState } from 'react'
-import FieldSet from '~~/components/concessionaire/FieldSet'
-import YearInput from '~~/components/concessionaire/YearInput';
-import { useScaffoldWriteContract, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+import { FormEventHandler, useState } from "react";
+import FieldSet from "~~/components/concessionaire/FieldSet";
+import YearInput from "~~/components/concessionaire/YearInput";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 interface FormData {
   id: bigint;
+  isEnabled: boolean;
   plate: string;
   model: string;
   brand: string;
@@ -29,37 +30,37 @@ interface Fix {
 }
 
 const page = () => {
-
   const { writeContractAsync: writeYourContractAsync } = useScaffoldWriteContract({
     contractName: "YourContract",
   });
 
   const [formData, setFormData] = useState<FormData>({
     id: BigInt(0),
-    plate: '',
-    model: '',
-    brand: '',
-    vin: '',
+    isEnabled: true,
+    plate: "",
+    model: "",
+    brand: "",
+    vin: "",
     year: BigInt(0),
     mileage: BigInt(0),
     currentOwner: "0x0000000000000000000000000000000000000000",
     isSold: false,
-    contact: '',
+    contact: "",
     price: BigInt(0),
-    fixes: []
+    fixes: [],
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault();
-    console.log('Form data:', formData);
+    console.log("Form data:", formData);
     try {
       await writeYourContractAsync({
         functionName: "registerVehicle",
@@ -85,7 +86,8 @@ const page = () => {
                   required={true}
                   name="plate"
                   value={formData.plate}
-                  onChange={handleChange} />
+                  onChange={handleChange}
+                />
                 <FieldSet
                   legend="Bin"
                   type="text"
@@ -93,7 +95,8 @@ const page = () => {
                   required={true}
                   name="vin"
                   value={formData.vin}
-                  onChange={handleChange} />
+                  onChange={handleChange}
+                />
                 <FieldSet
                   legend="Modelo"
                   type="text"
@@ -101,14 +104,15 @@ const page = () => {
                   required={true}
                   name="model"
                   value={formData.model}
-                  onChange={handleChange} />
+                  onChange={handleChange}
+                />
               </div>
               {/* Columna Derecha */}
               <div className="space-y-4">
                 <YearInput
-                  legend='Año de fabricación'
+                  legend="Año de fabricación"
                   value={Number(formData.year)}
-                  onChange={(year) => setFormData({ ...formData, year: BigInt(year) })}
+                  onChange={year => setFormData({ ...formData, year: BigInt(year) })}
                   label="Año de fabricación"
                   minYear={2000}
                   maxYear={new Date().getFullYear()}
@@ -121,7 +125,8 @@ const page = () => {
                   required={true}
                   name="mileage"
                   value={formData.mileage.toString()}
-                  onChange={handleChange} />
+                  onChange={handleChange}
+                />
                 <FieldSet
                   legend="Marca"
                   type="text"
@@ -129,7 +134,8 @@ const page = () => {
                   required={true}
                   name="brand"
                   value={formData.brand}
-                  onChange={handleChange} />
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className="flex justify-center mt-8">
@@ -138,13 +144,10 @@ const page = () => {
               </button>
             </div>
           </form>
-
         </div>
       </div>
     </div>
+  );
+};
 
-
-  )
-}
-
-export default page
+export default page;

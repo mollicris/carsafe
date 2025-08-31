@@ -33,6 +33,7 @@ contract YourContract is AccessControl{
     }
     struct Vehicle {
         uint256 id;
+        bool isEnabled;
         string plate;
         string model;
         string brand;
@@ -171,6 +172,7 @@ contract YourContract is AccessControl{
         );
         vehicleToPlate[vehicle.plate] = Vehicle({
             id: vehicle.id,
+            isEnabled: true,
             plate: vehicle.plate,
             model: vehicle.model,
             brand: vehicle.brand,
